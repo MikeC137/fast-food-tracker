@@ -6,7 +6,7 @@ function PageNav() {
     <nav className="bg-zinc-800 px-4">
       <div className="mx-auto flex max-w-5xl items-center justify-between">
         <Logo />
-        <ul className="md:flex flex items-center gap-4 text-zinc-300 font-inter">
+        <ul className="md:flex flex items-center gap-4 text-zinc-300 font-['Inter',sans-serif]">
           <li
             className={
               "hover:text-white hover:bg-blue-500 p-2 rounded-lg transition-colors"
