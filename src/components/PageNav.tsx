@@ -9,16 +9,12 @@ function PageNav() {
         <ul className="md:flex flex items-center gap-4 text-zinc-300 font-['Inter',sans-serif]">
           <li
             className={
-              "hover:text-white hover:bg-blue-500 p-2 rounded-lg transition-colors"
+              "bg-blue-600 hover:bg-blue-800 p-2 rounded-lg transition-colors"
             }
           >
             <NavLink to="/dashboard">DASHBOARD</NavLink>
           </li>
-          <li
-            className={
-              "hover:text-white hover:bg-blue-500 p-2 rounded-lg transition-colors"
-            }
-          >
+          <li className={"hover:bg-green-700 p-2 rounded-lg transition-colors"}>
             <NavLink to="/history">HISTORY</NavLink>
           </li>
         </ul>
