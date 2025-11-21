@@ -9,7 +9,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ title, description, icon: Icon }: FeatureCardProps) {
   return (
-    <Card className="bg-zinc-800 mt-5 w-full max-w-sm min-w-full sm:min-w-[280px] md:min-w-[320px] lg:min-w-[400px] xl:min-w-[480px] border-1 border-solid border-zinc-700">
+    <Card className="bg-zinc-800 mt-5 w-full max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg border-1 border-solid border-zinc-700">
       <CardHeader>
         <div className="flex items-center gap-3 mb-2">
           <Icon className="text-blue-500 w-6 h-6" />

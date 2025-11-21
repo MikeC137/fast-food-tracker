@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
+import { TrendingUp, PieChart, History, Smartphone } from "lucide-react";
+import FeatureCard from "@/components/FeatureCard";
 
 function Homepage() {
   const navigate = useNavigate();
@@ -30,9 +32,34 @@ function Homepage() {
           View History
         </button>
       </div>
-      <h2 className="text-zinc-300 font-['Inter',sans-serif] font-bold text-center p-15">
-        Everything You Need To Track Your Spending
-      </h2>
+      <section className="container mx-auto px-4 py-15">
+        <h2 className="text-zinc-300 font-['Inter',sans-serif] font-bold text-center">
+          Everything You Need To Track Your Spending
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center max-w-5xl mx-auto">
+          <FeatureCard
+            title="Budget Tracking"
+            description="Set monthly budgets and monitor your spending in real-time with
+                visual progress indicators."
+            icon={TrendingUp}
+          />
+          <FeatureCard
+            title="Smart Analytics"
+            description="Visualize your spending patterns with interactive charts and category breakdowns."
+            icon={PieChart}
+          />
+          <FeatureCard
+            title="Complete History"
+            description="Access your full expense history with detailed records of every transaction."
+            icon={History}
+          />
+          <FeatureCard
+            title="Mobile Friendly"
+            description="Track expenses on the go with a responsive design that works on any device."
+            icon={Smartphone}
+          />
+        </div>
+      </section>
     </div>
   );
 }
