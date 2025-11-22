@@ -2,12 +2,13 @@ import { useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import { TrendingUp, PieChart, History, Smartphone } from "lucide-react";
 import FeatureCard from "@/components/FeatureCard";
+import Footer from "@/components/Footer";
 
 function Homepage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-zinc-900">
+    <div className="min-h-screen flex flex-col bg-zinc-900">
       <PageNav />
       <h1 className="mx-auto max-w-2xl text-center pt-15 mb-5 text-4xl md:text-6xl text-zinc-300 text-balance font-['Inter',sans-serif] font-bold">
         Take Control of Your
@@ -32,7 +33,7 @@ function Homepage() {
           View History
         </button>
       </div>
-      <section className="container mx-auto px-4 py-15">
+      <section className="container flex-1 mx-auto px-4 py-15">
         <h2 className="text-zinc-300 pb-4 text-2xl md:text-3xl font-['Inter',sans-serif] font-bold text-center">
           Everything You Need To Track Your Spending
         </h2>
@@ -60,6 +61,7 @@ function Homepage() {
           />
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
