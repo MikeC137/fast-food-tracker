@@ -1,13 +1,18 @@
 import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useExpenses } from "@/contexts/ExpensesContext";
 
 function MonthlyBudgetCard() {
+  const { getTotalSpent } = useExpenses();
+  const totalSpent = getTotalSpent();
+
   const now = new Date();
   const monthYear = now.toLocaleString("default", {
     month: "long",
     year: "numeric",
   });
+
   return (
     <div className="flex justify-center">
       <Card className="bg-zinc-800 w-xs md:w-2xl lg:w-5xl">
@@ -31,7 +36,7 @@ function MonthlyBudgetCard() {
           <div className="flex justify-between">
             <div className="m:pl-6 m:pl-8">
               <p className="text-zinc-300 font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base">
-                $300.62
+                ${totalSpent}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 $500
