@@ -26,6 +26,7 @@ function AddExpenseModal() {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [category, setCategory] = useState<Expense["category"]>("Other");
+  const [open, setOpen] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -43,10 +44,11 @@ function AddExpenseModal() {
     setAmount("");
     setDate(new Date().toISOString().split("T")[0]);
     setCategory("Other");
+    setOpen(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold p-2 rounded-lg bg-blue-600 text-sm sm:text-base">
         + Add Expense
       </DialogTrigger>
@@ -145,7 +147,10 @@ function AddExpenseModal() {
           <DialogClose className="bg-zinc-700 rounded-lg px-1.5">
             Cancel
           </DialogClose>
-          <button className="bg-blue-600 rounded-lg px-1.5 py-1">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 rounded-lg px-1.5 py-1"
+          >
             Add Expense
           </button>
         </DialogFooter>

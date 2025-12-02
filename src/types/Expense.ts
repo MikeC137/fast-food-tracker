@@ -2,7 +2,7 @@ export interface Expense {
   id: string;
   amount: number;
   date: Date;
-  Restaurant: string;
+  restaurant: string;
   category:
     | "Burgers"
     | "Pizza"
