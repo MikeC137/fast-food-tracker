@@ -2,10 +2,23 @@ import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useExpenses } from "@/contexts/ExpensesContext";
+import { useBudget } from "@/contexts/BudgetContext";
 
 function MonthlyBudgetCard() {
   const { getTotalSpent } = useExpenses();
+  const { budget } = useBudget();
   const totalSpent = getTotalSpent();
+  const percentageUsed = (totalSpent / budget) * 100;
+  const budgetRemaining = budget - totalSpent;
+
+  const getRemainingColor = () => {
+    if (percentageUsed >= 100) {
+      return "text-red-500";
+    } else if (percentageUsed >= 70) {
+      return "text-yellow-500";
+    }
+    return "text-green-300";
+  };
 
   const now = new Date();
   const monthYear = now.toLocaleString("default", {
@@ -15,7 +28,7 @@ function MonthlyBudgetCard() {
 
   return (
     <div className="flex justify-center">
-      <Card className="bg-zinc-800 w-xs md:w-2xl lg:w-5xl">
+      <Card className="bg-zinc-800 w-xs md:w-2xl lg:w-5xl border-2 border-zinc-700">
         <CardHeader className="pb-4">
           <div className="flex justify-between m:pl-6 m:pl-8">
             <div className="font-['Inter',sans-serif] text-base">
@@ -28,7 +41,7 @@ function MonthlyBudgetCard() {
             </div>
             <div className="font-['Inter',sans-serif] px-1.5 text-xs h-8 flex items-center gap-1 rounded-lg bg-zinc-500">
               <TrendingUp className="w-4" />
-              <span> 60% Used</span>
+              <span> {((totalSpent / budget) * 100).toFixed(2)}% Used</span>
             </div>
           </div>
         </CardHeader>
@@ -39,12 +52,14 @@ function MonthlyBudgetCard() {
                 ${totalSpent}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
-                $500
+                ${budget}
               </p>
             </div>
             <div>
-              <p className="text-green-300 font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base">
-                $ 199.38
+              <p
+                className={`${getRemainingColor()} font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base`}
+              >
+                ${budgetRemaining <= 0 ? 0 : budget}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 remaining
@@ -52,11 +67,15 @@ function MonthlyBudgetCard() {
             </div>
           </div>
           <div className="pt-4">
-            <Progress value={60} color="blue" className="bg-zinc-900" />
+            <Progress
+              value={percentageUsed >= 100 ? 100 : percentageUsed}
+              color={percentageUsed >= 100 ? "red" : "blue"}
+              className="bg-zinc-900"
+            />
             <div className="flex justify-between text-xs md:text-sm lg:text-md pt-2 text-muted-foreground">
               <span>$0</span>
-              <span>$250</span>
-              <span>$500</span>
+              <span>${budget / 2}</span>
+              <span>${budget}</span>
             </div>
           </div>
         </CardContent>
