@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 interface BudgetContextType {
-  budget: Number;
+  budget: number;
   updateBudget: (newBudget: number) => void;
 }
 
@@ -9,13 +9,13 @@ const BudgetContext = createContext<BudgetContextType | undefined>(undefined);
 
 function BudgetProvider({ children }: { children: ReactNode }) {
   const [budget, setBudget] = useState(() => {
-    const stored = localStorage.getItem("Budget");
+    const stored = localStorage.getItem("budget");
     return stored ? JSON.parse(stored) : 0;
   });
 
   function updateBudget(newBudget: number) {
     setBudget(newBudget);
-    localStorage.setItem("Budget", JSON.stringify(newBudget));
+    localStorage.setItem("budget", JSON.stringify(newBudget));
   }
 
   return (

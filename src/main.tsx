@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ExpensesProvider } from "./contexts/ExpensesContext.tsx";
+import { BudgetProvider } from "./contexts/BudgetContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")!).render(
       }}
     >
       <ExpensesProvider>
-        <App />
+        <BudgetProvider>
+          <App />
+        </BudgetProvider>
       </ExpensesProvider>
     </BrowserRouter>
   </StrictMode>
