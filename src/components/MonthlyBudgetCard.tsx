@@ -6,7 +6,7 @@ import { useBudget } from "@/contexts/BudgetContext";
 
 function MonthlyBudgetCard() {
   const { getTotalSpent } = useExpenses();
-  const { budget } = useBudget();
+  const { budget, currency } = useBudget();
   const totalSpent = getTotalSpent();
   const percentageUsed = (totalSpent / budget) * 100;
   const budgetRemaining = budget - totalSpent;
@@ -49,17 +49,20 @@ function MonthlyBudgetCard() {
           <div className="flex justify-between">
             <div className="m:pl-6 m:pl-8">
               <p className="text-zinc-300 font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base">
-                ${totalSpent}
+                {currency}
+                {totalSpent}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
-                ${budget}
+                {currency}
+                {budget}
               </p>
             </div>
             <div>
               <p
                 className={`${getRemainingColor()} font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base`}
               >
-                ${budgetRemaining <= 0 ? 0 : budget}
+                {currency}
+                {budgetRemaining <= 0 ? 0 : budget}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 remaining
@@ -73,9 +76,15 @@ function MonthlyBudgetCard() {
               className="bg-zinc-900"
             />
             <div className="flex justify-between text-xs md:text-sm lg:text-md pt-2 text-muted-foreground">
-              <span>$0</span>
-              <span>${budget / 2}</span>
-              <span>${budget}</span>
+              <span>{currency}0</span>
+              <span>
+                {currency}
+                {budget / 2}
+              </span>
+              <span>
+                {currency}
+                {budget}
+              </span>
             </div>
           </div>
         </CardContent>
