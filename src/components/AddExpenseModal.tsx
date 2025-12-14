@@ -52,7 +52,7 @@ function AddExpenseModal() {
       <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold p-2 rounded-lg bg-blue-600 text-sm sm:text-base hover:bg-blue-700 transition-colors">
         + Add Expense
       </DialogTrigger>
-      <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-sm max-w-sm">
+      <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-xs md:w-sm">
         <DialogHeader className="pb-4">
           <DialogTitle className="text-xl font-semibold">
             Add New Expense

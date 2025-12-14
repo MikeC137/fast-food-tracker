@@ -52,7 +52,7 @@ function AdjustBudgetModal() {
       <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold p-2 rounded-lg bg-blue-600 text-sm sm:text-base hover:bg-blue-700 transition-colors">
         Update Budget
       </DialogTrigger>
-      <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-sm max-w-sm">
+      <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-[300px]">
         <DialogHeader className="pb-4">
           <DialogTitle className="text-xl font-semibold">
             Update Budget
@@ -78,7 +78,8 @@ function AdjustBudgetModal() {
               }}
               step="0.01"
               min="0"
-              className="rounded-lg max-w-sm bg-zinc-700 text-zinc-100 border-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
+              autoFocus={false}
+              className="rounded-lg max-w-[250px] bg-zinc-700 text-zinc-100 border-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
             />
             <label
               htmlFor="currency"
@@ -94,7 +95,7 @@ function AdjustBudgetModal() {
             >
               <SelectTrigger
                 id="currency"
-                className="rounded-lg bg-zinc-700 text-zinc-100 border-zinc-600 hover:bg-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                className="rounded-lg bg-zinc-700 max-w-[250px] text-zinc-100 border-zinc-600 hover:bg-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
               >
                 <SelectValue placeholder="Select Currency" />
               </SelectTrigger>
@@ -111,8 +112,7 @@ function AdjustBudgetModal() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex flex-cols-2 gap-4"></div>
-          <DialogFooter className="flex sm:justify-start gap-3 pt-2">
+          <DialogFooter className="flex sm:justify-start gap-3">
             <DialogClose className="bg-zinc-700 text-zinc-300 rounded-lg px-4 py-2 hover:bg-zinc-600 transition-colors font-medium">
               Cancel
             </DialogClose>
