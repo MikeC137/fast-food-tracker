@@ -4,10 +4,11 @@ import { type Expense } from "@/types/Expense";
 interface ExpensesContextType {
   addExpense: (expense: Expense) => void;
   removeExpense: (id: string) => void;
-  // updateExpense
+  getExpensesInRange: (startDate: Date, endDate: Date) => Expense[] | undefined;
   getTotalSpent: () => number;
+  getTotalSpentInRange: (expense: Expense[]) => number;
+  // updateExpense
   // getExpensesByCategory
-  // getExpensesByMonth
 }
 
 const ExpensesContext = createContext<ExpensesContextType | undefined>(
@@ -37,9 +38,33 @@ function ExpensesProvider({ children }: { children: ReactNode }) {
     return expenses.reduce((acc, curr) => acc + curr.amount, 0);
   }
 
+  function getExpensesInRange(startDate: Date, endDate: Date) {
+    if (expenses.length <= 0) {
+      return;
+    }
+
+    const startTime = startDate.getTime();
+    const endTime = endDate.getTime();
+
+    return expenses.filter((expense) => {
+      const time = expense.date.getTime();
+      return time >= startTime && time <= endTime;
+    });
+  }
+
+  function getTotalSpentInRange(expenses: Expense[]) {
+    return expenses.reduce((acc, curr) => acc + curr.amount, 0);
+  }
+
   return (
     <ExpensesContext.Provider
-      value={{ addExpense, removeExpense, getTotalSpent }}
+      value={{
+        addExpense,
+        removeExpense,
+        getTotalSpent,
+        getExpensesInRange,
+        getTotalSpentInRange,
+      }}
     >
       {children}
     </ExpensesContext.Provider>
