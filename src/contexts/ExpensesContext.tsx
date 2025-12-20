@@ -16,7 +16,17 @@ const ExpensesContext = createContext<ExpensesContextType | undefined>(
 );
 
 function ExpensesProvider({ children }: { children: ReactNode }) {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>(() => {
+    const stored = localStorage.getItem("expenses");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.map((expense: Expense) => ({
+        ...expense,
+        date: new Date(expense.date),
+      }));
+    }
+    return [];
+  });
 
   function addExpense(expense: Expense) {
     setExpenses((prev) => {
