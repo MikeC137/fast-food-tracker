@@ -11,6 +11,7 @@ interface SummaryCardProps {
   title: string;
   value: number;
   note: string;
+  color: string;
   icon: LucideIcon;
   currency?: string;
 }
@@ -19,9 +20,16 @@ function SummaryCard({
   title,
   value,
   note,
+  color,
   icon: Icon,
   currency,
 }: SummaryCardProps) {
+  const colorMap: Record<string, string> = {
+    "green-500": "text-green-500",
+    "yellow-500": "text-yellow-500",
+    "red-500": "text-red-500",
+  };
+
   return (
     <Card className="bg-zinc-800 mt-5 w-full max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg border-1 border-solid border-zinc-700">
       <CardHeader>
@@ -37,7 +45,9 @@ function SummaryCard({
           {currency}
           {value}
         </div>
-        <CardDescription className="text-lg">{note}</CardDescription>
+        <CardDescription className={`text-lg ${colorMap[color] || ""}`}>
+          {note}
+        </CardDescription>
       </CardContent>
     </Card>
   );
