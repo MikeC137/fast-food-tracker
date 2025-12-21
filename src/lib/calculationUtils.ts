@@ -24,6 +24,26 @@ export function formatPercentageChange(percentage: number | null): string {
   return `${sign}${percentage.toFixed(0)}%`;
 }
 
+export function getComparisonColor(
+  currentMonth: number,
+  lastMonth: number
+): string {
+  if (!lastMonth || lastMonth === 0) {
+    return "yellow-500";
+  }
+
+  const threshold = 0.01;
+  const difference = Math.abs(currentMonth - lastMonth);
+
+  if (difference <= threshold) {
+    return "yellow-500";
+  } else if (currentMonth < lastMonth) {
+    return "green-500";
+  } else {
+    return "red-500";
+  }
+}
+
 // Generate a comparison note between two periods
 export function generateComparisonNote(
   current: number,

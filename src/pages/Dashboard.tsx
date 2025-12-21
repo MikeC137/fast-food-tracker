@@ -6,7 +6,10 @@ import SummaryCard from "@/components/SummaryCard";
 import { useBudget } from "@/contexts/BudgetContext";
 import { useExpenses } from "@/contexts/ExpensesContext";
 import { getCurrentMonthRange, getLastMonthRange } from "@/lib/dateUtils";
-import { generateComparisonNote } from "@/lib/calculationUtils";
+import {
+  generateComparisonNote,
+  getComparisonColor,
+} from "@/lib/calculationUtils";
 import { DollarSign } from "lucide-react";
 
 function Dashboard() {
@@ -55,6 +58,7 @@ function Dashboard() {
             currency={currency}
             icon={DollarSign}
             note={note}
+            color={getComparisonColor(currentMonthTotal, lastMonthTotal)}
           />
         </div>
       </section>
