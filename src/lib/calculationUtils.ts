@@ -29,7 +29,7 @@ export function getComparisonColor(
   lastMonth: number
 ): string {
   if (!lastMonth || lastMonth === 0) {
-    return "yellow-500";
+    return "zinc-500";
   }
 
   const threshold = 0.01;
@@ -51,7 +51,7 @@ export function generateComparisonNote(
   periodLabel: string = "last period"
 ): string {
   if (baseline === 0) {
-    return current > 0 ? `No data from ${periodLabel}` : "No expenses yet";
+    return current > 0 ? `This Month` : "No expenses yet";
   }
 
   const threshold = 0.01;
