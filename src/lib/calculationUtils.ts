@@ -15,6 +15,12 @@ export function formatPercentageChange(percentage: number | null): string {
     return "N/A";
   }
   const sign = percentage > 0 ? "+" : "";
+
+  const rounded = Math.round(percentage);
+  if (rounded === 0 && percentage !== 0) {
+    return `${sign}${percentage.toFixed(1)}%`;
+  }
+
   return `${sign}${percentage.toFixed(0)}%`;
 }
 
@@ -26,6 +32,13 @@ export function generateComparisonNote(
 ): string {
   if (baseline === 0) {
     return current > 0 ? `No data from ${periodLabel}` : "No expenses yet";
+  }
+
+  const threshold = 0.01;
+  const difference = Math.abs(current - baseline);
+
+  if (difference <= threshold) {
+    return `Same as ${periodLabel}`;
   }
 
   const percentage = calculatePercentageChange(current, baseline);
