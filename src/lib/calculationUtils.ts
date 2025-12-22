@@ -24,6 +24,10 @@ export function formatPercentageChange(percentage: number | null): string {
   return `${sign}${percentage.toFixed(0)}%`;
 }
 
+export function formattedValue(value: number) {
+  return Number.isInteger(value) ? value.toString() : value.toFixed(2);
+}
+
 export function getComparisonColor(
   currentMonth: number,
   lastMonth: number
