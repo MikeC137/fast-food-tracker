@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { validatePositiveNumber } from "@/lib/utils";
 
 function AddExpenseModal() {
   const { addExpense } = useExpenses();
@@ -28,8 +29,23 @@ function AddExpenseModal() {
   const [category, setCategory] = useState<Expense["category"]>("Other");
   const [open, setOpen] = useState(false);
 
+  function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const validatedValue = validatePositiveNumber(e.target.value, false);
+    setAmount(validatedValue);
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const amountValue = parseFloat(amount);
+
+    if (!amount || isNaN(amountValue) || amountValue <= 0) {
+      return;
+    }
+
+    if (!restaurant) {
+      return;
+    }
 
     const newExpense: Expense = {
       id: crypto.randomUUID(),
@@ -90,7 +106,7 @@ function AddExpenseModal() {
                 type="number"
                 placeholder="0.00"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={handleAmountChange}
                 step="0.01"
                 className="rounded-lg bg-zinc-700 text-zinc-100 border-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
               />

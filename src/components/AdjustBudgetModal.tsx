@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { CURRENCIES, type CurrencySymbol } from "@/types/Currency";
+import { validatePositiveNumber } from "@/lib/utils";
 
 function AdjustBudgetModal() {
   const [open, setOpen] = useState(false);
@@ -34,6 +35,11 @@ function AdjustBudgetModal() {
       setAmount("");
     }
   }, [open, budget]);
+
+  function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const validatedValue = validatePositiveNumber(e.target.value, false);
+    setAmount(validatedValue);
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -71,11 +77,7 @@ function AdjustBudgetModal() {
               type="number"
               placeholder={budget != null ? budget.toString() : "0.00"}
               value={amount}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (value === "" || parseFloat(value) >= 0)
-                  setAmount(e.target.value);
-              }}
+              onChange={handleAmountChange}
               step="0.01"
               min="0"
               autoFocus={false}
