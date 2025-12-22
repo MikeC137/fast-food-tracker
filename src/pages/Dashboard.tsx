@@ -10,11 +10,16 @@ import {
   generateComparisonNote,
   getComparisonColor,
 } from "@/lib/calculationUtils";
-import { DollarSign } from "lucide-react";
+import { DollarSign, Calendar, TrendingUp } from "lucide-react";
 
 function Dashboard() {
-  const { getTotalSpent, getTotalSpentInRange, getExpensesInRange } =
-    useExpenses();
+  const {
+    getTotalSpent,
+    getTotalSpentInRange,
+    getExpensesInRange,
+    getTotalTransactions,
+    getAveragePerVisit,
+  } = useExpenses();
   const { currency } = useBudget();
 
   // Date ranges
@@ -32,13 +37,31 @@ function Dashboard() {
   );
 
   // Calculate totals
-  const currentMonthTotal = getTotalSpentInRange(currentMonthExpenses ?? []);
-  const lastMonthTotal = getTotalSpentInRange(lastMonthExpenses ?? []);
+  const currentMonthTotalSpent = getTotalSpentInRange(
+    currentMonthExpenses ?? []
+  );
+  const currentMonthTransactions = getTotalTransactions(
+    currentMonthExpenses ?? []
+  );
+  const currentMonthAverage = getAveragePerVisit(currentMonthExpenses ?? []);
+  const lastMonthTotalSpent = getTotalSpentInRange(lastMonthExpenses ?? []);
+  const lastMonthTransactions = getTotalTransactions(lastMonthExpenses ?? []);
+  const lastMonthAverage = getAveragePerVisit(lastMonthExpenses ?? []);
 
   // Generate comparison note
-  const note = generateComparisonNote(
-    currentMonthTotal,
-    lastMonthTotal,
+  const totalSpentNote = generateComparisonNote(
+    currentMonthTotalSpent,
+    lastMonthTotalSpent,
+    "last month"
+  );
+  const totalTransactionsNote = generateComparisonNote(
+    currentMonthTransactions,
+    lastMonthTransactions,
+    "last month"
+  );
+  const averageNote = generateComparisonNote(
+    currentMonthAverage,
+    lastMonthAverage,
     "last month"
   );
 
@@ -57,8 +80,29 @@ function Dashboard() {
             value={getTotalSpent()}
             currency={currency}
             icon={DollarSign}
-            note={note}
-            color={getComparisonColor(currentMonthTotal, lastMonthTotal)}
+            note={totalSpentNote}
+            color={getComparisonColor(
+              currentMonthTotalSpent,
+              lastMonthTotalSpent
+            )}
+          />
+          <SummaryCard
+            title="Transactions"
+            value={currentMonthTransactions}
+            icon={Calendar}
+            note={totalTransactionsNote}
+            color={getComparisonColor(
+              currentMonthTransactions,
+              lastMonthTransactions
+            )}
+          />
+          <SummaryCard
+            title="Average Per Visit"
+            value={currentMonthAverage}
+            currency={currency}
+            icon={TrendingUp}
+            note={averageNote}
+            color={getComparisonColor(currentMonthAverage, lastMonthAverage)}
           />
         </div>
       </section>
