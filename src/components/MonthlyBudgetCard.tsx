@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useExpenses } from "@/contexts/ExpensesContext";
 import { useBudget } from "@/contexts/BudgetContext";
+import { formattedValue } from "@/lib/calculationUtils";
 
 function MonthlyBudgetCard() {
   const { getTotalSpent } = useExpenses();
@@ -50,7 +51,7 @@ function MonthlyBudgetCard() {
             <div className="m:pl-6 m:pl-8">
               <p className="text-zinc-300 font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base">
                 {currency}
-                {totalSpent}
+                {formattedValue(totalSpent)}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 {currency}

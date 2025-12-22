@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import type { LucideIcon } from "lucide-react";
+import { formattedValue } from "@/lib/calculationUtils";
 
 interface SummaryCardProps {
   title: string;
@@ -43,7 +44,7 @@ function SummaryCard({
       <CardContent>
         <div className="text-zinc-300 text-3xl">
           {currency}
-          {value}
+          {formattedValue(value)}
         </div>
         <CardDescription className={`text-lg ${colorMap[color] || ""}`}>
           {note}
