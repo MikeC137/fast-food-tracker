@@ -29,11 +29,11 @@ function MonthlyBudgetCard() {
 
   return (
     <div className="flex justify-center">
-      <Card className="bg-zinc-800 w-xs md:w-2xl lg:w-5xl border-2 border-zinc-700">
+      <Card className="bg-zinc-800 w-full max-w-xs md:max-w-2xl lg:max-w-4xl xl:max-w-5xl border-1 border-zinc-700">
         <CardHeader className="pb-4">
           <div className="flex justify-between m:pl-6 m:pl-8">
             <div className="font-['Inter',sans-serif] text-base">
-              <CardTitle className="text-zinc-300 pb-1 text-sm md:text-md lg:text-lg">
+              <CardTitle className="text-zinc-300 pb-1 text-md md:text-lg lg:text-xl">
                 Monthly Budget
               </CardTitle>
               <p className="text-zinc-500 text-xs md:text-sm lg:text-md">
