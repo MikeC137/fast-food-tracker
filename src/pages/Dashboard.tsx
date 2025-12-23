@@ -72,9 +72,9 @@ function Dashboard() {
         <AddExpenseModal />
         <AdjustBudgetModal />
       </div>
-      <MonthlyBudgetCard />
-      <section className="container flex-1 mx-auto px-4 py-15">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center max-w-5xl mx-auto">
+      <section className="container mx-auto px-4 max-w-2xl lg:max-w-4xl">
+        <MonthlyBudgetCard />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center mt-5">
           <SummaryCard
             title="Total Spent"
             value={getTotalSpent()}
@@ -97,7 +97,7 @@ function Dashboard() {
             )}
           />
           <SummaryCard
-            title="Average Per Visit"
+            title="Avg. Per Visit"
             value={currentMonthAverage}
             currency={currency}
             icon={TrendingUp}
