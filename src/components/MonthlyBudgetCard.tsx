@@ -4,11 +4,17 @@ import { Progress } from "@/components/ui/progress";
 import { useExpenses } from "@/contexts/ExpensesContext";
 import { useBudget } from "@/contexts/BudgetContext";
 import { formattedValue } from "@/lib/calculationUtils";
+import { getCurrentMonthRange } from "@/lib/dateUtils";
 
 function MonthlyBudgetCard() {
-  const { getTotalSpent } = useExpenses();
+  const { getTotalSpentInRange, getExpensesInRange } = useExpenses();
   const { budget, currency } = useBudget();
-  const totalSpent = getTotalSpent();
+
+  const currentMonthRange = getCurrentMonthRange();
+  const currentMonthExpenses =
+    getExpensesInRange(currentMonthRange.start, currentMonthRange.end) ?? [];
+
+  const totalSpent = getTotalSpentInRange(currentMonthExpenses);
   const percentageUsed = (totalSpent / budget) * 100;
   const budgetRemaining = budget - totalSpent;
 
@@ -63,7 +69,7 @@ function MonthlyBudgetCard() {
                 className={`${getRemainingColor()} font-['Inter',sans-serif] text-md md:text-lg lg:text-xl text-base`}
               >
                 {currency}
-                {budgetRemaining <= 0 ? 0 : budget}
+                {budgetRemaining <= 0 ? 0 : formattedValue(budgetRemaining)}
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 remaining
