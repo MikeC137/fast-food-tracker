@@ -7,7 +7,7 @@ interface ExpensesContextType {
   getExpensesInRange: (startDate: Date, endDate: Date) => Expense[] | undefined;
   getTotalSpent: () => number;
   getTotalSpentInRange: (expense: Expense[]) => number;
-  getTotalTransactions: (expense: Expense[]) => number;
+  getTotalTransactionsInRange: (expense: Expense[]) => number;
   getAveragePerVisit: (expense: Expense[]) => number;
   // updateExpense
   // getExpensesByCategory
@@ -68,7 +68,7 @@ function ExpensesProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function getTotalTransactions(expenses: Expense[]) {
+  function getTotalTransactionsInRange(expenses: Expense[]) {
     return expenses.length;
   }
 
@@ -76,7 +76,9 @@ function ExpensesProvider({ children }: { children: ReactNode }) {
     if (expenses.length === 0) {
       return 0;
     }
-    return getTotalSpentInRange(expenses) / getTotalTransactions(expenses);
+    return (
+      getTotalSpentInRange(expenses) / getTotalTransactionsInRange(expenses)
+    );
   }
 
   return (
@@ -87,7 +89,7 @@ function ExpensesProvider({ children }: { children: ReactNode }) {
         getTotalSpent,
         getExpensesInRange,
         getTotalSpentInRange,
-        getTotalTransactions,
+        getTotalTransactionsInRange,
         getAveragePerVisit,
       }}
     >

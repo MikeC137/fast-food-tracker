@@ -11,13 +11,13 @@ import {
   getComparisonColor,
 } from "@/lib/calculationUtils";
 import { DollarSign, Calendar, TrendingUp } from "lucide-react";
+import SpendingChart from "@/components/LineChart";
 
 function Dashboard() {
   const {
-    getTotalSpent,
     getTotalSpentInRange,
     getExpensesInRange,
-    getTotalTransactions,
+    getTotalTransactionsInRange,
     getAveragePerVisit,
   } = useExpenses();
   const { currency } = useBudget();
@@ -40,12 +40,14 @@ function Dashboard() {
   const currentMonthTotalSpent = getTotalSpentInRange(
     currentMonthExpenses ?? []
   );
-  const currentMonthTransactions = getTotalTransactions(
+  const currentMonthTransactions = getTotalTransactionsInRange(
     currentMonthExpenses ?? []
   );
   const currentMonthAverage = getAveragePerVisit(currentMonthExpenses ?? []);
   const lastMonthTotalSpent = getTotalSpentInRange(lastMonthExpenses ?? []);
-  const lastMonthTransactions = getTotalTransactions(lastMonthExpenses ?? []);
+  const lastMonthTransactions = getTotalTransactionsInRange(
+    lastMonthExpenses ?? []
+  );
   const lastMonthAverage = getAveragePerVisit(lastMonthExpenses ?? []);
 
   // Generate comparison note
@@ -77,7 +79,7 @@ function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center mt-5">
           <SummaryCard
             title="Total Spent"
-            value={getTotalSpent()}
+            value={getTotalSpentInRange(currentMonthExpenses ?? [])}
             currency={currency}
             icon={DollarSign}
             note={totalSpentNote}
@@ -105,6 +107,9 @@ function Dashboard() {
             color={getComparisonColor(currentMonthAverage, lastMonthAverage)}
           />
         </div>
+      </section>
+      <section className="container mx-auto px-4 max-w-2xl lg:max-w-4xl mt-8">
+        <SpendingChart />
       </section>
     </div>
   );
