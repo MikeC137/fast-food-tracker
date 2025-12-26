@@ -106,9 +106,9 @@ function SpendingChart() {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-zinc-300 text-lg font-semibold">
+    <div className="w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0">
+      <div className="flex items-center mb-4">
+        <h3 className="text-zinc-300 text-lg font-semibold mx-4">
           Spending Over Time
         </h3>
         <Select
@@ -136,7 +136,7 @@ function SpendingChart() {
           </SelectContent>
         </Select>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="80%" height={300}>
         <LineChart data={filledChartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
           <XAxis
