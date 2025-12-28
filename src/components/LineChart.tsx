@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -8,24 +7,19 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { useExpenses } from "@/contexts/ExpensesContext";
-import { getLastNMonthsRange } from "@/lib/dateUtils";
+import { useChartPeriod } from "@/hooks/useChartPeriod";
+import { PeriodSelector } from "./PeriodSelector";
 import type { Expense } from "@/types/Expense";
-type Period = "3" | "6" | "12";
 
 function SpendingChart() {
-  const [period, setPeriod] = useState<Period>("3");
-  const { getExpensesInRange } = useExpenses();
-
-  const dateRange = getLastNMonthsRange(parseInt(period));
-  const expenses = getExpensesInRange(dateRange.start, dateRange.end) ?? [];
+  const {
+    period,
+    setPeriod,
+    dateRange,
+    expenses,
+    hasAll12Months,
+    getXAxisInterval,
+  } = useChartPeriod();
 
   const chartData = expenses.reduce((acc, expense: Expense) => {
     const date = new Date(expense.date);
@@ -69,74 +63,19 @@ function SpendingChart() {
     currentDate.setMonth(currentDate.getMonth() + 1);
   }
 
-  const twelveMonthRange = getLastNMonthsRange(12);
-  const allTwelveMonthsExpenses =
-    getExpensesInRange(twelveMonthRange.start, twelveMonthRange.end) ?? [];
-
-  const monthsWithData = new Set<string>();
-  allTwelveMonthsExpenses.forEach((expense) => {
-    const date = new Date(expense.date);
-    const monthKey = date.toLocaleDateString("en-US", {
-      month: "short",
-      year: "numeric",
-    });
-    monthsWithData.add(monthKey);
-  });
-
-  const last12Months = new Set<string>();
-  const checkDate = new Date(twelveMonthRange.start);
-  while (checkDate <= twelveMonthRange.end) {
-    const monthKey = checkDate.toLocaleDateString("en-US", {
-      month: "short",
-      year: "numeric",
-    });
-    last12Months.add(monthKey);
-    checkDate.setMonth(checkDate.getMonth() + 1);
-  }
-
-  const hasAll12Months =
-    last12Months.size === monthsWithData.size &&
-    Array.from(last12Months).every((month) => monthsWithData.has(month));
-
-  const getXAxisInterval = () => {
-    if (period === "3") return 0;
-    if (period === "6") return 1;
-    if (period === "12") return 2;
-    return 0;
-  };
-
   return (
     <div className="w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0">
       <div className="flex items-center mb-4">
         <h3 className="text-zinc-300 text-lg font-semibold mx-4">
           Spending Over Time
         </h3>
-        <Select
-          value={period}
-          onValueChange={(value) => setPeriod(value as Period)}
-        >
-          <SelectTrigger className="w-[140px] bg-zinc-700 text-zinc-100 border-zinc-600">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-zinc-700 text-zinc-100 border-zinc-600">
-            <SelectItem value="3" className="text-zinc-300 focus:bg-zinc-600">
-              3 Months
-            </SelectItem>
-            <SelectItem value="6" className="text-zinc-300 focus:bg-zinc-600">
-              6 Months
-            </SelectItem>
-            {hasAll12Months && (
-              <SelectItem
-                value="12"
-                className="text-zinc-300 focus:bg-zinc-600"
-              >
-                1 Year
-              </SelectItem>
-            )}
-          </SelectContent>
-        </Select>
+        <PeriodSelector
+          period={period}
+          onPeriodChange={setPeriod}
+          hasAll12Months={hasAll12Months}
+        />
       </div>
-      <ResponsiveContainer width="80%" height={300}>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={filledChartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
           <XAxis
