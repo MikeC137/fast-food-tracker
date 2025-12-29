@@ -12,6 +12,7 @@ import {
 } from "@/lib/calculationUtils";
 import { DollarSign, Calendar, TrendingUp } from "lucide-react";
 import SpendingChart from "@/components/LineChart";
+import CategoriesChart from "@/components/BarChart";
 
 function Dashboard() {
   const {
@@ -108,8 +109,9 @@ function Dashboard() {
           />
         </div>
       </section>
-      <section className="container mx-auto px-4 max-w-2xl lg:max-w-4xl mt-8">
+      <section className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-auto gap-6 px-4 max-w-2xl lg:max-w-4xl py-6">
         <SpendingChart />
+        <CategoriesChart />
       </section>
     </div>
   );
