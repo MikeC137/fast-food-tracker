@@ -61,16 +61,15 @@ function CategoriesChart() {
     return monthData;
   });
 
-  const categoryColors = [
-    "#3b82f6",
-    "#ef4444",
-    "#10b981",
-    "#f59e0b",
-    "#8b5cf6",
-    "#ec4899",
-    "#06b6d4",
-  ];
-
+  const categoryColors: Record<string, string> = {
+    Burgers: "#3b82f6",
+    Pizza: "#ef4444",
+    Chicken: "#10b981",
+    Mexican: "#f59e0b",
+    Sandwich: "#8b5cf6",
+    Snack: "#ec4899",
+    Other: "#06b6d4",
+  };
   return (
     <div className="w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0">
       <div className="flex items-center mb-4">
@@ -111,12 +110,12 @@ function CategoriesChart() {
               value != null ? `$${Number(value).toFixed(2)}` : "$0.00"
             }
           />
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <Bar
               key={category}
               dataKey={category}
               stackId="a"
-              fill={categoryColors[index % categoryColors.length]}
+              fill={categoryColors[category]}
             />
           ))}
         </BarChart>
