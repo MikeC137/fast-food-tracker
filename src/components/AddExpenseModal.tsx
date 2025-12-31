@@ -65,7 +65,7 @@ function AddExpenseModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold p-2 rounded-lg bg-blue-600 text-sm sm:text-base hover:bg-blue-700 transition-colors">
+      <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold px-6 py-3 rounded-lg bg-blue-600 sm:text-lg text-base hover:bg-blue-700 transition-colors">
         + Add Expense
       </DialogTrigger>
       <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-xs md:w-sm">
