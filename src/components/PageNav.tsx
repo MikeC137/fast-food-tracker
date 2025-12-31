@@ -11,7 +11,7 @@ function PageNav() {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `hover:text-white p-2 rounded-lg transition-colors ${
+                `hover:text-white px-3 py-2 md:px-6 md:py-3 rounded-lg transition-colors ${
                   isActive ? "text-white bg-blue-600" : "text-zinc-300"
                 }`
               }
@@ -23,7 +23,7 @@ function PageNav() {
             <NavLink
               to="/history"
               className={({ isActive }) =>
-                `hover:text-white p-2 rounded-lg transition-colors ${
+                `hover:text-white px-3 py-2 md:px-6 md:py-3 rounded-lg transition-colors ${
                   isActive ? "text-white bg-blue-600" : "text-zinc-300"
                 }`
               }

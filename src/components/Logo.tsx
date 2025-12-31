@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Logo() {
   return (
     <Link to="/">
-      <img className="h-22" src="../public/Logo.png" alt="Logo" />
+      <img className="h-24 md:h-30" src="/Logo.png" alt="Logo" />
     </Link>
   );
 }
