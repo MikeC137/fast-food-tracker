@@ -55,7 +55,7 @@ function AdjustBudgetModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold px-6 py-3 rounded-lg bg-blue-600 sm:text-lg text-base hover:bg-blue-700 transition-colors">
+      <DialogTrigger className="text-zinc-300 font-['Inter',sans-serif] font-bold px-3 py-2 sm:px-6 sm:py-3 rounded-lg bg-blue-600 sm:text-lg text-base hover:bg-blue-700 transition-colors">
         Update Budget
       </DialogTrigger>
       <DialogContent className="text-zinc-300 font-['Inter',sans-serif] rounded-lg border-zinc-600 bg-zinc-800 p-6 w-[300px]">
