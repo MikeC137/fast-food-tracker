@@ -71,8 +71,8 @@ function CategoriesChart() {
     Other: "#06b6d4",
   };
   return (
-    <div className="w-full border border-radius-1 py-4 rounded-xl border-zinc-700 px-4 max-w-sm md:max-w-md lg:max-w-lg mx-auto md:mx-0">
-      <div className="flex items-center mb-4">
+    <div className="w-full border border-radius-1 py-4 rounded-xl border-zinc-700 px-4 max-w-md md:max-w-lg lg:max-w-2xl mx-auto md:mx-0">
+      <div className="flex items-center pt-3 mb-4">
         <h3 className="text-zinc-300 text-lg font-semibold mx-4">
           Spending By Categories
         </h3>
@@ -82,11 +82,9 @@ function CategoriesChart() {
           hasAll12Months={hasAll12Months}
         />
       </div>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={350}>
         <BarChart
-          width={500}
-          height={300}
-          margin={{ top: 5, right: 20, bottom: 20, left: 5 }}
+          margin={{ top: 5, right: 25, bottom: 20, left: 5 }}
           data={chartData}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
