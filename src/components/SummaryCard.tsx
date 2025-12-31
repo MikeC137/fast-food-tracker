@@ -32,7 +32,7 @@ function SummaryCard({
   };
 
   return (
-    <Card className="bg-zinc-800 mt-5 w-full max-w-xs md:max-w-sm lg:max-w-md border-1 border-solid border-zinc-700">
+    <Card className="bg-zinc-800 mt-5 w-full max-w-sm md:max-w-md lg:max-w-lg border-1 border-solid border-zinc-700">
       <CardHeader>
         <div className="flex justify-between gap-3 mb-2">
           <CardTitle className="text-zinc-300 text-md md:text-lg font-['Inter',sans-serif] font-bold">

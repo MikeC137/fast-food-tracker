@@ -75,7 +75,7 @@ function Dashboard() {
         <AddExpenseModal />
         <AdjustBudgetModal />
       </div>
-      <section className="container mx-auto px-4 max-w-2xl lg:max-w-4xl">
+      <section className="container mx-auto px-4 max-w-4xl lg:max-w-6xl">
         <MonthlyBudgetCard />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center mt-5">
           <SummaryCard
@@ -109,7 +109,7 @@ function Dashboard() {
           />
         </div>
       </section>
-      <section className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-auto gap-6 px-4 max-w-2xl lg:max-w-4xl py-6">
+      <section className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-auto gap-6 px-4 max-w-4xl lg:max-w-6xl py-6">
         <SpendingChart />
         <CategoriesChart />
       </section>

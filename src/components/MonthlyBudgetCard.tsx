@@ -35,7 +35,7 @@ function MonthlyBudgetCard() {
 
   return (
     <div className="flex justify-center">
-      <Card className="bg-zinc-800 w-full max-w-xs md:max-w-2xl lg:max-w-4xl xl:max-w-5xl border-1 border-zinc-700">
+      <Card className="bg-zinc-800 w-full max-w-sm md:max-w-4xl lg:max-w-6xl border-1 border-zinc-700">
         <CardHeader className="pb-4">
           <div className="flex justify-between m:pl-6 m:pl-8">
             <div className="font-['Inter',sans-serif] text-base">
