@@ -47,11 +47,14 @@ function AddExpenseModal() {
       return;
     }
 
+    const [year, month, day] = date.split("-").map(Number);
+    const expenseDate = new Date(year, month - 1, day);
+
     const newExpense: Expense = {
       id: crypto.randomUUID(),
       restaurant: restaurant,
       amount: parseFloat(amount),
-      date: new Date(date),
+      date: expenseDate,
       category: category,
     };
 
