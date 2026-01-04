@@ -1,4 +1,3 @@
-// In Currency.ts
 export type CurrencySymbol =
   | "$" // USD - US Dollar
   | "€" // EUR - Euro
@@ -21,27 +20,33 @@ export type CurrencySymbol =
   | "₿"; // BTC - Bitcoin
 
 export interface Currency {
-  currency: CurrencySymbol;
+  symbol: CurrencySymbol;
+  name: string;
+  iso: string;
 }
 
-export const CURRENCIES: { symbol: CurrencySymbol; name: string }[] = [
-  { symbol: "$", name: "USD - US Dollar" },
-  { symbol: "€", name: "EUR - Euro" },
-  { symbol: "£", name: "GBP - British Pound" },
-  { symbol: "¥", name: "JPY/CNY - Japanese Yen / Chinese Yuan" },
-  { symbol: "₹", name: "INR - Indian Rupee" },
-  { symbol: "₽", name: "RUB - Russian Ruble" },
-  { symbol: "₩", name: "KRW - South Korean Won" },
-  { symbol: "₪", name: "ILS - Israeli Shekel" },
-  { symbol: "₦", name: "NGN - Nigerian Naira" },
-  { symbol: "₨", name: "PKR - Pakistani Rupee" },
-  { symbol: "₫", name: "VND - Vietnamese Dong" },
-  { symbol: "₱", name: "PHP - Philippine Peso" },
-  { symbol: "₴", name: "UAH - Ukrainian Hryvnia" },
-  { symbol: "₵", name: "GHS - Ghanaian Cedi" },
-  { symbol: "₸", name: "KZT - Kazakhstani Tenge" },
-  { symbol: "₺", name: "TRY - Turkish Lira" },
-  { symbol: "₼", name: "AZN - Azerbaijani Manat" },
-  { symbol: "₾", name: "GEL - Georgian Lari" },
-  { symbol: "₿", name: "BTC - Bitcoin" },
+export const CURRENCIES: {
+  symbol: CurrencySymbol;
+  name: string;
+  iso: string;
+}[] = [
+  { symbol: "$", name: "USD - US Dollar", iso: "USD" },
+  { symbol: "€", name: "EUR - Euro", iso: "EUR" },
+  { symbol: "£", name: "GBP - British Pound", iso: "GBP" },
+  { symbol: "¥", name: "JPY/CNY - Japanese Yen / Chinese Yuan", iso: "JPY" },
+  { symbol: "₹", name: "INR - Indian Rupee", iso: "INR" },
+  { symbol: "₽", name: "RUB - Russian Ruble", iso: "RUB" },
+  { symbol: "₩", name: "KRW - South Korean Won", iso: "KRW" },
+  { symbol: "₪", name: "ILS - Israeli Shekel", iso: "ILS" },
+  { symbol: "₦", name: "NGN - Nigerian Naira", iso: "NGN" },
+  { symbol: "₨", name: "PKR - Pakistani Rupee", iso: "PKR" },
+  { symbol: "₫", name: "VND - Vietnamese Dong", iso: "VND" },
+  { symbol: "₱", name: "PHP - Philippine Peso", iso: "PHP" },
+  { symbol: "₴", name: "UAH - Ukrainian Hryvnia", iso: "UAH" },
+  { symbol: "₵", name: "GHS - Ghanaian Cedi", iso: "GHS" },
+  { symbol: "₸", name: "KZT - Kazakhstani Tenge", iso: "KZT" },
+  { symbol: "₺", name: "TRY - Turkish Lira", iso: "TRY" },
+  { symbol: "₼", name: "AZN - Azerbaijani Manat", iso: "AZN" },
+  { symbol: "₾", name: "GEL - Georgian Lari", iso: "GEL" },
+  { symbol: "₿", name: "BTC - Bitcoin", iso: "BTC" },
 ];
