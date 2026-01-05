@@ -50,3 +50,5 @@ export const CURRENCIES: {
   { symbol: "₾", name: "GEL - Georgian Lari", iso: "GEL" },
   { symbol: "₿", name: "BTC - Bitcoin", iso: "BTC" },
 ];
+
+export const BASE_CURRENCY = CURRENCIES[0];
