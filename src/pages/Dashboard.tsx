@@ -81,7 +81,7 @@ function Dashboard() {
           <SummaryCard
             title="Total Spent"
             value={getTotalSpentInRange(currentMonthExpenses ?? [])}
-            currency={currency}
+            currency={currency.symbol}
             icon={DollarSign}
             note={totalSpentNote}
             color={getComparisonColor(
@@ -102,7 +102,7 @@ function Dashboard() {
           <SummaryCard
             title="Avg. Per Visit"
             value={currentMonthAverage}
-            currency={currency}
+            currency={currency.symbol}
             icon={TrendingUp}
             note={averageNote}
             color={getComparisonColor(currentMonthAverage, lastMonthAverage)}

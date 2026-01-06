@@ -24,17 +24,18 @@ function AdjustBudgetModal() {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const { updateBudget, budget, currency } = useBudget();
-  const [selectedCurrency, setSelectedCurrency] =
-    useState<CurrencySymbol>(currency);
+  const [selectedCurrency, setSelectedCurrency] = useState<CurrencySymbol>(
+    currency.symbol
+  );
 
   useEffect(() => {
     if (open && budget != null) {
       setAmount(budget.toString());
-      setSelectedCurrency(currency);
+      setSelectedCurrency(currency.symbol);
     } else if (!open) {
       setAmount("");
     }
-  }, [open, budget]);
+  }, [open, budget, currency]);
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const validatedValue = validatePositiveNumber(e.target.value, false);
@@ -48,7 +49,12 @@ function AdjustBudgetModal() {
     if (!amount || isNaN(budgetValue) || budgetValue < 0) {
       return;
     }
-    updateBudget(budgetValue, selectedCurrency);
+
+    const currencyObj = CURRENCIES.find((c) => c.symbol === selectedCurrency);
+
+    if (!currencyObj) return;
+
+    updateBudget(budgetValue, currencyObj);
     setAmount("");
     setOpen(false);
   }
@@ -91,8 +97,8 @@ function AdjustBudgetModal() {
             </label>
             <Select
               value={selectedCurrency}
-              onValueChange={(value) =>
-                setSelectedCurrency(value as CurrencySymbol)
+              onValueChange={(value: CurrencySymbol) =>
+                setSelectedCurrency(value)
               }
             >
               <SelectTrigger
