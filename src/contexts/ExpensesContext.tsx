@@ -1,16 +1,24 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { type Expense } from "@/types/Expense";
+import { convertCurrency } from "@/lib/currencyConverterUtil";
+import { BASE_CURRENCY } from "@/types/Currency";
+import { useBudget } from "./BudgetContext";
+
+type NormalizedExpense = Expense & {
+  displayAmount: number;
+};
 
 interface ExpensesContextType {
+  expenses: NormalizedExpense[];
   addExpense: (expense: Expense) => void;
   removeExpense: (id: string) => void;
-  getExpensesInRange: (startDate: Date, endDate: Date) => Expense[] | undefined;
-  getTotalSpent: () => number;
-  getTotalSpentInRange: (expense: Expense[]) => number;
-  getTotalTransactionsInRange: (expense: Expense[]) => number;
-  getAveragePerVisit: (expense: Expense[]) => number;
-  // updateExpense
-  // getExpensesByCategory
 }
 
 const ExpensesContext = createContext<ExpensesContextType | undefined>(
@@ -18,81 +26,61 @@ const ExpensesContext = createContext<ExpensesContextType | undefined>(
 );
 
 function ExpensesProvider({ children }: { children: ReactNode }) {
-  const [expenses, setExpenses] = useState<Expense[]>(() => {
+  const { currency } = useBudget();
+
+  const [rawExpenses, setRawExpenses] = useState<Expense[]>(() => {
     const stored = localStorage.getItem("expenses");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      return parsed.map((expense: Expense) => ({
-        ...expense,
-        date: new Date(expense.date),
-      }));
-    }
-    return [];
+    if (!stored) return [];
+    return JSON.parse(stored).map((e: Expense) => ({
+      ...e,
+      date: new Date(e.date),
+    }));
   });
 
+  const [expenses, setExpenses] = useState<NormalizedExpense[]>([]);
+
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(rawExpenses));
+  }, [rawExpenses]);
+
+  useEffect(() => {
+    const normalize = async () => {
+      const normalized = await Promise.all(
+        rawExpenses.map(async (expense) => ({
+          ...expense,
+          displayAmount: await convertCurrency(
+            expense.amount,
+            BASE_CURRENCY,
+            currency
+          ),
+        }))
+      );
+
+      setExpenses(normalized);
+    };
+
+    normalize();
+  }, [rawExpenses, currency]);
+
   function addExpense(expense: Expense) {
-    setExpenses((prev) => {
-      const next = [...prev, expense];
-      localStorage.setItem("expenses", JSON.stringify(next));
-      return next;
-    });
+    setRawExpenses((prev) => [...prev, expense]);
   }
 
   function removeExpense(id: string) {
-    setExpenses(() => {
-      const next = expenses.filter((expense) => expense.id != id);
-      localStorage.setItem("expenses", JSON.stringify(next));
-      return next;
-    });
+    setRawExpenses((prev) => prev.filter((e) => e.id !== id));
   }
 
-  function getTotalSpentInRange(expenses: Expense[]) {
-    return expenses.reduce((acc, curr) => acc + curr.amount, 0);
-  }
-
-  function getTotalSpent() {
-    return getTotalSpentInRange(expenses);
-  }
-
-  function getExpensesInRange(startDate: Date, endDate: Date) {
-    if (expenses.length <= 0) {
-      return;
-    }
-
-    const startTime = startDate.getTime();
-    const endTime = endDate.getTime();
-
-    return expenses.filter((expense) => {
-      const time = expense.date.getTime();
-      return time >= startTime && time <= endTime;
-    });
-  }
-
-  function getTotalTransactionsInRange(expenses: Expense[]) {
-    return expenses.length;
-  }
-
-  function getAveragePerVisit(expenses: Expense[]) {
-    if (expenses.length === 0) {
-      return 0;
-    }
-    return (
-      getTotalSpentInRange(expenses) / getTotalTransactionsInRange(expenses)
-    );
-  }
+  const value = useMemo(
+    () => ({
+      expenses,
+      addExpense,
+      removeExpense,
+    }),
+    [expenses]
+  );
 
   return (
-    <ExpensesContext.Provider
-      value={{
-        addExpense,
-        removeExpense,
-        getTotalSpent,
-        getExpensesInRange,
-        getTotalSpentInRange,
-        getTotalTransactionsInRange,
-        getAveragePerVisit,
-      }}
-    >
+    <ExpensesContext.Provider value={value}>
       {children}
     </ExpensesContext.Provider>
   );
@@ -100,8 +88,8 @@ function ExpensesProvider({ children }: { children: ReactNode }) {
 
 function useExpenses() {
   const context = useContext(ExpensesContext);
-  if (context === undefined) {
-    throw new Error("useExpenses must be used within an ExpensesProvider");
+  if (!context) {
+    throw new Error("useExpenses must be used within ExpensesProvider");
   }
   return context;
 }

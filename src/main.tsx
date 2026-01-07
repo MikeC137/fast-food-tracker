@@ -14,11 +14,11 @@ createRoot(document.getElementById("root")!).render(
         v7_relativeSplatPath: true,
       }}
     >
-      <ExpensesProvider>
-        <BudgetProvider>
+      <BudgetProvider>
+        <ExpensesProvider>
           <App />
-        </BudgetProvider>
-      </ExpensesProvider>
+        </ExpensesProvider>
+      </BudgetProvider>
     </BrowserRouter>
   </StrictMode>
 );
