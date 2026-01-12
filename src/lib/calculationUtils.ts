@@ -25,6 +25,7 @@ export function formatPercentageChange(percentage: number | null): string {
 }
 
 export function formattedValue(value: number) {
+  if (!Number.isFinite(value)) return "0.00";
   return Number.isInteger(value) ? value.toString() : value.toFixed(2);
 }
 

@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { validatePositiveNumber } from "@/lib/utils";
+import { BASE_CURRENCY } from "@/types/Currency";
 
 function AddExpenseModal() {
   const { addExpense } = useExpenses();
@@ -53,7 +54,8 @@ function AddExpenseModal() {
     const newExpense: Expense = {
       id: crypto.randomUUID(),
       restaurant: restaurant,
-      amount: parseFloat(amount),
+      currency: BASE_CURRENCY,
+      amount: amountValue,
       date: expenseDate,
       category: category,
     };
