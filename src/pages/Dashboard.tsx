@@ -15,58 +15,19 @@ import SpendingChart from "@/components/LineChart";
 import CategoriesChart from "@/components/BarChart";
 
 function Dashboard() {
-  const {
-    getTotalSpentInRange,
-    getExpensesInRange,
-    getTotalTransactionsInRange,
-    getAveragePerVisit,
-  } = useExpenses();
+  const { getTotalInRange, getAverageInRange, getCountInRange } = useExpenses();
   const { currency } = useBudget();
 
   // Date ranges
   const currentMonthRange = getCurrentMonthRange();
   const lastMonthRange = getLastMonthRange();
 
-  // Get expenses
-  const currentMonthExpenses = getExpensesInRange(
-    currentMonthRange.start,
-    currentMonthRange.end
-  );
-  const lastMonthExpenses = getExpensesInRange(
-    lastMonthRange.start,
-    lastMonthRange.end
-  );
-
-  // Calculate totals
-  const currentMonthTotalSpent = getTotalSpentInRange(
-    currentMonthExpenses ?? []
-  );
-  const currentMonthTransactions = getTotalTransactionsInRange(
-    currentMonthExpenses ?? []
-  );
-  const currentMonthAverage = getAveragePerVisit(currentMonthExpenses ?? []);
-  const lastMonthTotalSpent = getTotalSpentInRange(lastMonthExpenses ?? []);
-  const lastMonthTransactions = getTotalTransactionsInRange(
-    lastMonthExpenses ?? []
-  );
-  const lastMonthAverage = getAveragePerVisit(lastMonthExpenses ?? []);
-
-  // Generate comparison note
-  const totalSpentNote = generateComparisonNote(
-    currentMonthTotalSpent,
-    lastMonthTotalSpent,
-    "last month"
-  );
-  const totalTransactionsNote = generateComparisonNote(
-    currentMonthTransactions,
-    lastMonthTransactions,
-    "last month"
-  );
-  const averageNote = generateComparisonNote(
-    currentMonthAverage,
-    lastMonthAverage,
-    "last month"
-  );
+  const currentMonthTotal = getTotalInRange(currentMonthRange);
+  const currentMonthTransactionCount = getCountInRange(currentMonthRange);
+  const currentMonthAverage = getAverageInRange(currentMonthRange);
+  const lastMonthTotal = getTotalInRange(lastMonthRange);
+  const lastMonthTransactionCount = getCountInRange(lastMonthRange);
+  const lastMonthAverage = getAverageInRange(lastMonthRange);
 
   return (
     <div className="min-h-screen">
@@ -80,23 +41,28 @@ function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center mt-5">
           <SummaryCard
             title="Total Spent"
-            value={getTotalSpentInRange(currentMonthExpenses ?? [])}
+            value={currentMonthTotal}
             currency={currency.symbol}
             icon={DollarSign}
-            note={totalSpentNote}
-            color={getComparisonColor(
-              currentMonthTotalSpent,
-              lastMonthTotalSpent
+            note={generateComparisonNote(
+              currentMonthTotal,
+              lastMonthTotal,
+              "last month"
             )}
+            color={getComparisonColor(currentMonthTotal, lastMonthTotal)}
           />
           <SummaryCard
             title="Transactions"
-            value={currentMonthTransactions}
+            value={currentMonthTransactionCount}
             icon={Calendar}
-            note={totalTransactionsNote}
+            note={generateComparisonNote(
+              currentMonthTransactionCount,
+              lastMonthTransactionCount,
+              "last month"
+            )}
             color={getComparisonColor(
-              currentMonthTransactions,
-              lastMonthTransactions
+              currentMonthTransactionCount,
+              lastMonthTransactionCount
             )}
           />
           <SummaryCard
@@ -104,7 +70,11 @@ function Dashboard() {
             value={currentMonthAverage}
             currency={currency.symbol}
             icon={TrendingUp}
-            note={averageNote}
+            note={generateComparisonNote(
+              currentMonthAverage,
+              lastMonthAverage,
+              "last month"
+            )}
             color={getComparisonColor(currentMonthAverage, lastMonthAverage)}
           />
         </div>

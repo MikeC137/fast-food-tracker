@@ -11,16 +11,14 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 
 function MonthlyBudgetCard() {
-  const { getTotalSpentInRange, getExpensesInRange } = useExpenses();
+  const { getTotalInRange } = useExpenses();
   const { budget, currency } = useBudget();
   const [displayTotal, setDisplayTotal] = useState(0);
 
   const currentMonthRange = getCurrentMonthRange();
-  const currentMonthExpenses =
-    getExpensesInRange(currentMonthRange.start, currentMonthRange.end) ?? [];
-  const totalSpentUSD = getTotalSpentInRange(currentMonthExpenses);
-  const percentageUsed = budget === 0 ? 0 : (totalSpentUSD / budget) * 100;
-  const budgetRemaining = budget - totalSpentUSD;
+  const totalSpentUSD = getTotalInRange(currentMonthRange);
+  const percentageUsed = budget === 0 ? 0 : (displayTotal / budget) * 100;
+  const budgetRemaining = budget - displayTotal;
 
   const prevCurrencyRef = useRef(currency);
   const prevBudgetRef = useRef(budget);
@@ -99,7 +97,7 @@ function MonthlyBudgetCard() {
               </p>
               <p className="text-zinc-500 font-['Inter',sans-serif] text-sm md:text-md lg:text-lg text-base">
                 {currency.symbol}
-                {budget.toFixed(2)}
+                {formattedValue(budget)}
               </p>
             </div>
             <div>
@@ -124,11 +122,11 @@ function MonthlyBudgetCard() {
               <span>{currency.symbol}0</span>
               <span>
                 {currency.symbol}
-                {(budget / 2).toFixed(2)}
+                {formattedValue(budget / 2)}
               </span>
               <span>
                 {currency.symbol}
-                {budget.toFixed(2)}
+                {formattedValue(budget)}
               </span>
             </div>
           </div>

@@ -9,11 +9,10 @@ export function useChartPeriod() {
   const { getExpensesInRange } = useExpenses();
 
   const dateRange = getLastNMonthsRange(parseInt(period));
-  const expenses = getExpensesInRange(dateRange.start, dateRange.end) ?? [];
+  const expenses = getExpensesInRange(dateRange) ?? [];
 
   const twelveMonthRange = getLastNMonthsRange(12);
-  const allTwelveMonthsExpenses =
-    getExpensesInRange(twelveMonthRange.start, twelveMonthRange.end) ?? [];
+  const allTwelveMonthsExpenses = getExpensesInRange(twelveMonthRange) ?? [];
 
   const monthsWithData = new Set<string>();
   allTwelveMonthsExpenses.forEach((expense) => {
