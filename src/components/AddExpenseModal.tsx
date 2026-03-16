@@ -29,6 +29,7 @@ function AddExpenseModal() {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [category, setCategory] = useState<Expense["category"]>("Other");
   const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const validatedValue = validatePositiveNumber(e.target.value, false);
@@ -40,24 +41,33 @@ function AddExpenseModal() {
 
     const amountValue = parseFloat(amount);
 
+    const nextErrors: Record<string, string> = {};
+
+    if (!restaurant.trim()) {
+      nextErrors.restaurant = "Restaurant is required.";
+    }
+
     if (!amount || isNaN(amountValue) || amountValue <= 0) {
+      nextErrors.amount = "Amount is required.";
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
       return;
     }
 
-    if (!restaurant) {
-      return;
-    }
+    setErrors({});
 
     const [year, month, day] = date.split("-").map(Number);
     const expenseDate = new Date(year, month - 1, day);
 
     const newExpense: Expense = {
       id: crypto.randomUUID(),
-      restaurant: restaurant,
+      restaurant,
       currency: BASE_CURRENCY,
       amount: amountValue,
       date: expenseDate,
-      category: category,
+      category,
     };
 
     addExpense(newExpense);
@@ -97,6 +107,9 @@ function AddExpenseModal() {
               onChange={(e) => setRestaurant(e.target.value)}
               className="rounded-lg max-w-sm bg-zinc-700 text-zinc-100 border-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
             />
+            {errors.restaurant && (
+              <p className="text-sm text-destructive">{errors.restaurant}</p>
+            )}
           </div>
           <div className="flex flex-cols-2 gap-4">
             <div className="space-y-2">
@@ -115,6 +128,9 @@ function AddExpenseModal() {
                 step="0.01"
                 className="rounded-lg bg-zinc-700 text-zinc-100 border-zinc-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
               />
+              {errors.amount && (
+                <p className="text-sm text-destructive">{errors.amount}</p>
+              )}
             </div>
             <div className="space-y-2">
               <label
